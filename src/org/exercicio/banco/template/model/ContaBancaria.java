@@ -4,9 +4,9 @@ import java.util.Objects;
 
 /**
 *
-* Nome:
-* Curso:
-* Matrícula:
+* Nome:Anderson Emanoel dos Santos Rodrigues
+* Curso:IPI	
+* Matrícula:20222INFIG0051
 * 
 */
 public class ContaBancaria {
@@ -54,6 +54,13 @@ public class ContaBancaria {
 	 */
 	public void depositar(double valor) {
 		
+		if(valor > 0) {
+			this.saldo = this.saldo + valor;
+		} else {
+			System.out.print("Valor invalido para deposito.");
+		}
+			
+		
 	}
 
 	/**
@@ -70,6 +77,15 @@ public class ContaBancaria {
 	 */
 	public void sacar(double valor) {
 		
+		if(!this.status) {
+			System.out.print("Conta inativa.");
+		} else if (valor <= 0) {
+			System.out.print("Valor invalido para saque.");
+		} else if (valor > this.saldo) {
+			System.out.print("Saldo insuficiente.");
+		} else {
+			this.saldo = this.saldo - valor;
+		}
 	}
 
 	/**
@@ -82,6 +98,13 @@ public class ContaBancaria {
 	 */
 	public void fecharConta() {
 		
+		if(!this.status) {
+			System.out.print("Conta ja inativa.");
+		} else if (this.saldo > 0) {
+			System.out.print("Conta com saldo. Nao eh possivel fecha-la.");
+		} else {
+			this.status = false;
+		}
 	}
 
 	/**
@@ -90,7 +113,12 @@ public class ContaBancaria {
 	 * ativa." deve ser exibida no console. Utilize System.out.print();
 	 */
 	public void reabrirConta() {
-
+		
+		if(this.status = true) {
+			System.out.println("Conta já ativa.");
+		} else {
+			this.status = true;
+		}
 	}
 
 	/**
@@ -108,7 +136,18 @@ public class ContaBancaria {
 	 * @param destino
 	 */
 	public void realizarTransferencia(double quantia, ContaBancaria destino) {
-
+		
+		if(!this.status) {
+			System.out.print("Conta de origem inativa.");
+		} else if (!destino.status) {
+			System.out.print("Conta de destino inativa.");
+		} else if (quantia > this.saldo) {
+			System.out.print("Saldo insuficiente para transferencia.");
+		} else {
+			this.saldo = this.saldo - quantia;
+			destino.saldo = destino.saldo + quantia;
+		}
+		
 	}
 
 	public int getNumeroConta() {
@@ -127,20 +166,23 @@ public class ContaBancaria {
 		return status;
 	}
 
-	/**
-	 * Implemente o mehtodo hashCode
-	 */
 	@Override
 	public int hashCode() {
-		return 0;
+		return Objects.hash(numeroConta, saldo, status, titular);
 	}
 
-	/**
-	 * Implemente o mehtodo equals
-	 */
 	@Override
 	public boolean equals(Object obj) {
-		return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ContaBancaria other = (ContaBancaria) obj;
+		return numeroConta == other.numeroConta
+				&& Double.doubleToLongBits(saldo) == Double.doubleToLongBits(other.saldo) && status == other.status
+				&& Objects.equals(titular, other.titular);
 	}
 	
 	

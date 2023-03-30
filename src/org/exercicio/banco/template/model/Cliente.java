@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 /**
 *
-* Nome:
-* Curso:
-* Matrícula:
+* Nome:Anderson Emanoel dos Santos Rodrigues
+* Curso:IPI
+* Matrícula: 20222INFIG0051
 * 
 */
 public class Cliente {
@@ -31,6 +31,14 @@ public class Cliente {
      * @param c
      */
     public void adicionarConta(ContaBancaria c) {
+    	
+    	if (contas.contains(c)) {
+    		System.out.print("A conta jah estah associada a este cliente.");
+    	} else {
+    		contas.add(c); {
+    			System.out.print("Conta adicionada com sucesso!");
+    		}
+    	}
 
     }
 
@@ -45,6 +53,13 @@ public class Cliente {
      * @param c
      */
     public void removerConta(ContaBancaria c) {
+    	
+    	if(contas.contains(c)) {
+    		contas.remove(c);
+    		System.out.print("Conta removida com sucesso!");
+    	} else {
+    		System.out.print("A conta nao esta associada a este cliente.");
+    	}
 
     }
 
@@ -59,6 +74,15 @@ public class Cliente {
      * @return
      */
     public ContaBancaria localizarContaNumero(int numero) {
+    	
+    	for (ContaBancaria conta : contas) {
+    		if(conta.getNumeroConta() == numero) {
+    			System.out.print("Conta encontrada!");
+    			return conta;
+    		}
+    	}
+    	
+    	System.out.print("Conta nao encontrada.");
         return null;
     }
 
@@ -74,6 +98,13 @@ public class Cliente {
      * @return
      */
     public boolean localizarConta(ContaBancaria c) {
+ 
+    		if(contas.contains(c)) {
+    			System.out.print("Conta encontrada!");
+    			return true;
+    		}
+    	
+    	System.out.print("Conta nao encontrada.");
         return false;
     }
 
@@ -86,7 +117,13 @@ public class Cliente {
      * @return
      */
     public double balancoEntreContas() {
-        return 0.0;
+    	
+    	double valorTotal = 0.0;
+    	for(ContaBancaria conta : contas) {
+    		valorTotal = valorTotal + conta.getSaldo();
+    	}
+    	System.out.print("Balanco entre contas: RS" + valorTotal);
+        return valorTotal;
     }
     
     public ArrayList<ContaBancaria> getContas() {
